@@ -61,6 +61,11 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
     is_flag=True,
 )
 @click.option(
+    "--list-devices",
+    help="List trusted devices to choose sending 2SA code to.",
+    is_flag=True,
+)
+@click.option(
     "--cookie-directory",
     help="Directory to store cookies for authentication "
     "(default: ~/.pyicloud)",
@@ -249,6 +254,7 @@ def main(
         username: Optional[str],
         password: Optional[str],
         auth_only: bool,
+        list_devices: bool,
         cookie_directory: str,
         size: str,
         live_photo_size: str,
@@ -341,6 +347,7 @@ def main(
                 username,
                 password,
                 auth_only,
+                list_devices,
                 cookie_directory,
                 size,
                 recent,
@@ -719,6 +726,7 @@ def core(
         username: Optional[str],
         password: Optional[str],
         auth_only: bool,
+        list_devices: bool,
         cookie_directory: str,
         size: str,
         recent: Optional[int],
@@ -754,7 +762,7 @@ def core(
         or notification_script is not None
     )
     try:
-        icloud = authenticator(logger, domain)(
+        icloud = authenticator(logger, domain, list_devices)(
             username,
             password,
             cookie_directory,
