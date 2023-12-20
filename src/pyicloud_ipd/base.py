@@ -144,7 +144,7 @@ class PyiCloudSession(Session):
         try:
             data = response.json()
         except:  # pylint: disable=bare-except
-            request_logger.warning("Failed to parse response with JSON mimetype")
+            request_logger.debug("Failed to parse response with JSON mimetype")
             return response
 
         request_logger.debug(data)
