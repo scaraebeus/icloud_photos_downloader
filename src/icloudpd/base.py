@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 """Main script that uses Click to parse command-line arguments"""
 from __future__ import print_function
+from multiprocessing import freeze_support
+freeze_support() # fixing tqdm on macos
+
 import os
 import sys
 import time
@@ -58,11 +61,6 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
 @click.option(
     "--auth-only",
     help="Create/Update cookie and session tokens only.",
-    is_flag=True,
-)
-@click.option(
-    "--list-devices",
-    help="List trusted devices to choose sending 2SA code to.",
     is_flag=True,
 )
 @click.option(
@@ -246,7 +244,7 @@ CONTEXT_SETTINGS = {"help_option_names": ["-h", "--help"]}
               )
 # a hacky way to get proper version because automatic detection does not
 # work for some reason
-@click.version_option(version="1.17.0")
+@click.version_option(version="1.17.2")
 # pylint: disable-msg=too-many-arguments,too-many-statements
 # pylint: disable-msg=too-many-branches,too-many-locals
 def main(
@@ -254,7 +252,6 @@ def main(
         username: Optional[str],
         password: Optional[str],
         auth_only: bool,
-        list_devices: bool,
         cookie_directory: str,
         size: str,
         live_photo_size: str,
@@ -347,7 +344,6 @@ def main(
                 username,
                 password,
                 auth_only,
-                list_devices,
                 cookie_directory,
                 size,
                 recent,
@@ -726,7 +722,6 @@ def core(
         username: Optional[str],
         password: Optional[str],
         auth_only: bool,
-        list_devices: bool,
         cookie_directory: str,
         size: str,
         recent: Optional[int],
@@ -762,7 +757,7 @@ def core(
         or notification_script is not None
     )
     try:
-        icloud = authenticator(logger, domain, list_devices)(
+        icloud = authenticator(logger, domain)(
             username,
             password,
             cookie_directory,

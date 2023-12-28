@@ -2,6 +2,15 @@
 
 ## Unreleased
 
+## 1.17.2 (2023-12-22)
+
+- fix: module not found [#748](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/748)
+
+## 1.17.1 (2023-12-20)
+
+- fix: main macos binary failing [#668](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/668) [#700](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/700)
+- fix: debian glibc error [#741](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/741)
+
 ## 1.17.0 (2023-12-19)
 
 - fix: macos binary failing [#668](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/668) [#700](https://github.com/icloud-photos-downloader/icloud_photos_downloader/issues/700)

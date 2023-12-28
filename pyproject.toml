@@ -6,7 +6,7 @@ requires = [
 build-backend = "setuptools.build_meta"
 
 [project]
-version="1.17.0"
+version="1.17.2"
 name = "icloudpd"
 description = "icloudpd is a command-line tool to download photos and videos from iCloud."
 readme = "README_PYPI.md"
@@ -73,7 +73,6 @@ Homepage="https://github.com/icloud-photos-downloader/icloud_photos_downloader"
 [project.scripts]
 icloudpd = "icloudpd.base:main"
 icloud = "pyicloud_ipd.cmdline:main"
-icloudpd_ex = "starters.icloudpd_ex:main"
 
 [tool.pytest.ini_options]
 log_format = "%(levelname)-8s %(message)s"
