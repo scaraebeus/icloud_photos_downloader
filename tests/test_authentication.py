@@ -34,7 +34,7 @@ class AuthenticationTestCase(TestCase):
             with self.assertRaises(
                 pyicloud_ipd.exceptions.PyiCloudFailedLoginException
             ) as context:
-                authenticator(setup_logger(), "com")(
+                authenticator(setup_logger(), "com", False)(
                     "bad_username",
                     "bad_password",
                     cookie_directory=cookie_dir,
@@ -57,7 +57,7 @@ class AuthenticationTestCase(TestCase):
                 # delete ./tests/vcr_cassettes/auth_requires_2sa.yml,
                 # put your actual credentials in here, run the test,
                 # and then replace with dummy credentials.
-                authenticator(setup_logger(), "com")(
+                authenticator(setup_logger(), "com", False)(
                     "jdoe@gmail.com",
                     "password1",
                     raise_error_on_2sa=True,
@@ -83,7 +83,7 @@ class AuthenticationTestCase(TestCase):
                 # delete ./tests/vcr_cassettes/auth_requires_2fa.yml,
                 # put your actual credentials in here, run the test,
                 # and then replace with dummy credentials.
-                authenticator(setup_logger(), "com")(
+                authenticator(setup_logger(), "com", False)(
                     "jdoe@gmail.com",
                     "password1",
                     raise_error_on_2sa=True,
@@ -179,7 +179,7 @@ class AuthenticationTestCase(TestCase):
             )
             self.assertIn(
                 "INFO     Great, you're all set up. The script can now be run without "
-                "user interaction until 2SA expires.",
+                "user interaction until 2SA/2FA expires.",
                 self._caplog.text,
             )
             assert result.exit_code == 0

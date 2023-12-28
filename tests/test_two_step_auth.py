@@ -93,7 +93,7 @@ class TwoStepAuthTestCase(TestCase):
             )
             self.assertIn(
                 "INFO     Great, you're all set up. The script can now be run without "
-                "user interaction until 2SA expires.",
+                "user interaction until 2SA/2FA expires.",
                 self._caplog.text,
             )
             assert result.exit_code == 0
@@ -207,7 +207,7 @@ class TwoStepAuthTestCase(TestCase):
             )
             self.assertIn(
                 "INFO     Great, you're all set up. The script can now be run without "
-                "user interaction until 2SA expires.",
+                "user interaction until 2SA/2FA expires.",
                 self._caplog.text,
             )
             assert result.exit_code == 0
