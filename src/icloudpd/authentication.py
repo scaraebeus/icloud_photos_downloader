@@ -39,7 +39,6 @@ def authenticator(logger: logging.Logger, domain: str, list_devices: bool):
                 # Prompt for password if not stored in PyiCloud's keyring
                 password = click.prompt("iCloud Password", hide_input=True)
 
-
         if (icloud.requires_2fa or icloud.requires_2sa) and list_devices:
             prompt_request_verification(icloud, logger)
 
@@ -60,7 +59,8 @@ def authenticator(logger: logging.Logger, domain: str, list_devices: bool):
             request_2sa(icloud, logger)
 
         elif (not icloud.requires_2fa and not icloud.requires_2sa) and list_devices:
-            logger.info("Two-step/two-factor authentication is not required at this time")
+            logger.info(
+                "Two-step/two-factor authentication is not required at this time")
 
         return icloud
     return authenticate_
@@ -103,7 +103,9 @@ def request_2fa(icloud: pyicloud_ipd.PyiCloudService, logger: logging.Logger):
     validate_code(icloud, logger, "2FA", code)
 
 
-def prompt_request_verification(icloud: pyicloud_ipd.PyiCloudService, logger: logging.Logger):
+def prompt_request_verification(
+        icloud: pyicloud_ipd.PyiCloudService,
+        logger: logging.Logger):
     "List trusted devices for alternate 2SA/2FA verification"
     devices = icloud.trusted_devices
     devices_count = len(devices)
@@ -124,8 +126,8 @@ def prompt_request_verification(icloud: pyicloud_ipd.PyiCloudService, logger: lo
         # pylint: enable-msg=superfluous-parens
         device_index = click.prompt(
             "Please choose an option:",
-            default = 0,
-            type = click.IntRange(
+            default=0,
+            type=click.IntRange(
                 0,
                 devices_count
             )
@@ -146,7 +148,12 @@ def prompt_request_verification(icloud: pyicloud_ipd.PyiCloudService, logger: lo
         validate_code(icloud, logger, type, code, device)
 
 
-def validate_code(icloud: pyicloud_ipd.PyiCloudService, logger: logging.Logger, type: str, code: str, device: dict = None):
+def validate_code(
+        icloud: pyicloud_ipd.PyiCloudService,
+        logger: logging.Logger,
+        type: str,
+        code: str,
+        device: dict = None):
     if type.upper() == "2SA":
         if not icloud.validate_verification_code(device, code):
             logger.error("Failed to verify two-factor authentication code")
@@ -156,7 +163,7 @@ def validate_code(icloud: pyicloud_ipd.PyiCloudService, logger: logging.Logger, 
         if not icloud.validate_2fa_code(code):
             logger.error("Failed to verify two-factor authentication code")
             sys.exit(1)
-    else:
+    else: # pragma: no cover
         logger.error("Unknown authentication type: {type}")
         sys.exit(1)
 
@@ -167,4 +174,3 @@ def validate_code(icloud: pyicloud_ipd.PyiCloudService, logger: logging.Logger, 
         "the two-step authentication expires.\n"
         "(Use --help to view information about SMTP options.)"
     )
-
